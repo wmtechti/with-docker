@@ -11,7 +11,3 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - NEXT_TELEMETRY_DISABLED=1 # Desabilitar a telemetria, se necessário
-    volumes:
-      - .:/app
-    command: >
-      sh -c "HOSTNAME=0.0.0.0 node server.js"
