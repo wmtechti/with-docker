@@ -46,4 +46,6 @@ EXPOSE 3000
 
 ENV PORT 3000
 
+RUN yarn prisma generate
+
 CMD ["node", "server"]
