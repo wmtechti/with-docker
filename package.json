@@ -5,8 +5,12 @@
     "build": "next build"
   },
   "dependencies": {
+    "@prisma/client": "^5.15.0",
     "next": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.15.0"
   }
 }

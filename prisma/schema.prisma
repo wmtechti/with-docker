@@ -1,0 +1,239 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Aluno {
+  id                                          Int      @id @default(autoincrement())
+  aluno                                       String
+  sexo                                        String
+  treinador                                   String
+  dataNascimento                              DateTime
+  Objetivo                                    String
+  tempoTreinamentoIninterruptoAtual           String
+  tempoDestreinamento                         String
+  experienciaPreviaTreinamento                String
+  frequenciaMusculacao                        String
+  modalidadeExtra                             String
+  frequenciaModalidadeExtra                   String
+  altura                                      Float
+  peso                                        Float
+  torax                                       Float
+  cintura                                     Float
+  abdomen                                     Float
+  quadril                                     Float
+  braco_d                                     Float
+  braco_e                                     Float
+  coxa_d                                      Float
+  coxa_e                                      Float
+  panturrilha_d                               Float
+  panturrilha_e                               Float
+  medidaMao                                   Float
+  mobilidadeGlenoumeralDireita                Float
+  mobilidadeGlenoumeralEsquerda               Float
+  AmplitudeMovimentoQuadrilDireito            Float
+  AmplitudeMovimentoQuadrilEsquerdo           Float
+  AmplitudeMovimentoTornozeloDireito          Float
+  AmplitudeMovimentoTornozeloEsquerdo         Float
+  pranchaVentral                              Float
+  extensaoColuna                              Float
+  pranchaLateralDireita                       Float
+  pranchaLateralEsquerda                      Float
+  squatJump1                                  Float
+  squatJump2                                  Float
+  squatJump3                                  Float
+  RMagachamento                               Float
+  RMsupino                                    Float
+  RMterra                                     Float
+  RMbarraFixa                                 Float
+  VelocidadeAerobiaMaxima                     Float
+  bracoDireito                                Float
+  bracoEsquerdo                               Float
+  coxaDireita                                 Float
+  coxaEsquerda                                Float
+  panturrilhaDireita                          Float
+  panturrilhaEsquerda                         Float
+  idade                                       Int
+  data                                        DateTime
+  hora                                        DateTime
+  pontuacaoTempoTreinoAtual                   Int
+  pontuacao_tempo_de_destreinamento_atual     Int
+  pontuacao_experiencia_previa_de_treinamento Int
+  pontuacao_media_nivel_treinamento           Float
+  status_de_treinamento                       String
+  nivel_mob_torn_direito                      String
+  nivel_mob_torn_esquerdo                     String
+  nivel_mob_quadril_direito                   String
+  nivel_mob_quadril_esquerdo                  String
+  nivel_mob_omb_direito                       String
+  nivel_mob_omb_esquerdo                      String
+  nivelPranchaVentral                         String
+  nivelExtensaoColuna                         String
+  nivelPranchaLateralDireita                  String
+  nivelPranchaLateralEsquerda                 String
+  pontosPranchaVentral                        Float
+  pontosExtensaoColuna                        Float
+  pontosPranchaLateralDireita                 Float
+  pontosPranchaLateralEsquerda                Float
+  forcaRelativaAgachamento                    Float
+  forcaRelativaSupino                         Float
+  forcaRelativaTerra                          Float
+  forcaRelativaBarraFixa                      Float
+  squat_nivel                                 String
+  supino_nivel                                String
+  terra_nivel                                 String
+  pontuacao_squat_nivel                       Float
+  pontuacao_supino_nivel                      Float
+  pontuacao_terra_nivel                       Float
+  media_squat_jump                            Float
+  vo2_estimado                                Float
+  faixa_etaria                                String
+  nivel_vo2                                   String
+  IMC                                         Float
+  ClassificacaoIMC                            String
+  idtagaluno                                  String
+  Treino                                      Treino[]
+}
+
+model Session {
+  id           String   @id
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Todo {
+  id        String   @id
+  title     String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model Treino {
+  id                                          Int      @id @default(autoincrement())
+  diaTreino                                   String
+  modalidadeTreino                            String
+  diaTreinoExtra                              String
+  modalidadeTreinoExtra                       String
+  altura                                      Float
+  peso                                        Float
+  torax                                       Float
+  cintura                                     Float
+  abdomen                                     Float
+  quadril                                     Float
+  braco_d                                     Float
+  braco_e                                     Float
+  coxa_d                                      Float
+  coxa_e                                      Float
+  panturrilha_d                               Float
+  panturrilha_e                               Float
+  medidaMao                                   Float
+  mobilidadeGlenoumeralDireita                Float
+  mobilidadeGlenoumeralEsquerda               Float
+  AmplitudeMovimentoQuadrilDireito            Float
+  AmplitudeMovimentoQuadrilEsquerdo           Float
+  AmplitudeMovimentoTornozeloDireito          Float
+  AmplitudeMovimentoTornozeloEsquerdo         Float
+  pranchaVentral                              Float
+  extensaoColuna                              Float
+  pranchaLateralDireita                       Float
+  pranchaLateralEsquerda                      Float
+  squatJump1                                  Float
+  squatJump2                                  Float
+  squatJump3                                  Float
+  RMagachamento                               Float
+  RMsupino                                    Float
+  RMterra                                     Float
+  RMbarraFixa                                 Float
+  VelocidadeAerobiaMaxima                     Float
+  bracoDireito                                Float
+  bracoEsquerdo                               Float
+  coxaDireita                                 Float
+  coxaEsquerda                                Float
+  panturrilhaDireita                          Float
+  panturrilhaEsquerda                         Float
+  idade                                       Int
+  data                                        DateTime
+  hora                                        DateTime
+  pontuacaoTempoTreinoAtual                   Int
+  pontuacao_tempo_de_destreinamento_atual     Int
+  pontuacao_experiencia_previa_de_treinamento Int
+  pontuacao_media_nivel_treinamento           Float
+  status_de_treinamento                       String
+  nivel_mob_torn_direito                      String
+  nivel_mob_torn_esquerdo                     String
+  nivel_mob_quadril_direito                   String
+  nivel_mob_quadril_esquerdo                  String
+  nivel_mob_omb_direito                       String
+  nivel_mob_omb_esquerdo                      String
+  nivelPranchaVentral                         String
+  nivelExtensaoColuna                         String
+  nivelPranchaLateralDireita                  String
+  nivelPranchaLateralEsquerda                 String
+  pontosPranchaVentral                        Float
+  pontosExtensaoColuna                        Float
+  pontosPranchaLateralDireita                 Float
+  pontosPranchaLateralEsquerda                Float
+  forcaRelativaAgachamento                    Float
+  forcaRelativaSupino                         Float
+  forcaRelativaTerra                          Float
+  forcaRelativaBarraFixa                      Float
+  squat_nivel                                 String
+  supino_nivel                                String
+  terra_nivel                                 String
+  pontuacao_squat_nivel                       Float
+  pontuacao_supino_nivel                      Float
+  pontuacao_terra_nivel                       Float
+  media_squat_jump                            Float
+  vo2_estimado                                Float
+  faixa_etaria                                String
+  nivel_vo2                                   String
+  IMC                                         Float
+  ClassificacaoIMC                            String
+  userId                                      Int
+  Aluno                                       Aluno    @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id            String    @id
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  Account       Account[]
+  Session       Session[]
+  Todo          Todo[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
