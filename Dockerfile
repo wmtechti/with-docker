@@ -7,6 +7,10 @@ WORKDIR /app
 
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 COPY prisma ./prisma/
+# Instale o Prisma Client (opcional, dependendo do seu uso)
+RUN yarn add @prisma/client
+RUN npx prisma generate
+
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -17,7 +21,11 @@ RUN \
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
+
+
+
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/prisma ./prisma/
 COPY . .
 
 RUN \
@@ -39,6 +47,7 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/prisma ./prisma
 
 USER nextjs
 
@@ -46,6 +55,6 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-RUN npx prisma generate
+
 
 CMD ["node", "server"]
